@@ -9,7 +9,6 @@ defmodule Algorithm.DataStructures.List do
   def sqaure([]), do: []
   def sqaure([head | tail]), do: [head * head | sqaure(tail)]
 
-
   @doc """
     Add 1 for each element
 
@@ -32,13 +31,10 @@ defmodule Algorithm.DataStructures.List do
     > [2, 3, 4]
   """
   def add_1([]), do: []
-  def add_1([head | tail]) do
-    IO.inspect "Current list: #{inspect {head, tail}}"
-    res = [head + 1 | add_1(tail)]
-    IO.inspect "Result: #{inspect res}"
-    res
-  end
 
+  def add_1([head | tail]) do
+    [head + 1 | add_1(tail)]
+  end
 
   @doc """
     Apply function for each element in a list
@@ -48,4 +44,26 @@ defmodule Algorithm.DataStructures.List do
   """
   def map([], _fun), do: []
   def map([head | tail], fun), do: [fun.(head) | map(tail, fun)]
+
+  def reduce([], value, _), do: value
+  def reduce([head | tail], value, fun), do: reduce(tail, fun.(head, value), fun)
+
+  @doc """
+  Return sum of list and apply function for each element
+  """
+  def mapsum([], _fun, acc), do: acc
+  def mapsum([h | t], fun, acc), do: acc + mapsum(t, fun, fun.(h))
+  def mapsum(list, fun), do: mapsum(list, fun, 0)
+
+  def maxel([], val), do: val
+
+  def maxel([h | t], val) do
+    if h > val do
+      maxel(t, h)
+    else
+      maxel(t, val)
+    end
+  end
+
+  def maxel([h | t]), do: maxel(t, h)
 end
