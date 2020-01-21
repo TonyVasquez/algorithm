@@ -66,4 +66,17 @@ defmodule Algorithm.DataStructures.List do
   end
 
   def maxel([h | t]), do: maxel(t, h)
+
+  def all?([], _fun), do: true
+  def all?([h | t], fun), do: all?(t, fun, fun.(h))
+  def all?([h | t], fun, _value), do: all?(t, fun, fun.(h))
+  def all?([], _fun, value), do: value
+
+  def span(from, to), do: span(from, to, [])
+  def span(from, to, acc) when from == to, do: [from | acc]
+  def span(from, to, acc), do: span(from, to - 1, [to | acc])
+
+  def each([], _fun, _val), do: :ok
+  def each([h | t], fun), do: each(t, fun, fun.(h))
+  def each([h | t], fun, _value), do: each(t, fun, fun.(h))
 end
